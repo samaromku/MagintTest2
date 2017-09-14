@@ -36,8 +36,7 @@ public class TelegramAuthDialog extends DialogFragment implements AuthView {
     WebView wvTelegram;
     private AuthPresenter presenter;
     private OnAuthChangeListenter listenter;
-    private String userName = "zloi_savok";
-    private String userPwd = "qwerty2951323";
+
 
     public void setListenter(OnAuthChangeListenter listenter) {
         this.listenter = listenter;
@@ -70,8 +69,9 @@ public class TelegramAuthDialog extends DialogFragment implements AuthView {
                 super.onPageFinished(view, url);
                 if (url.startsWith("https://www.instagram.com/accounts/login/")) {
                     Log.i(TAG, "onPageFinished: hui");
-                    view.evaluateJavascript("javascript:document.getElementById('id_username').value = '" + userName + "';" +
-                            "javascript:document.getElementById('id_password').value='" + userPwd + "';" +
+                    // TODO: 14.09.2017 заменить имя и пароль на нормальные 
+                    view.evaluateJavascript("javascript:document.getElementById('id_username').value = '" + "userName" + "';" +
+                            "javascript:document.getElementById('id_password').value='" + "userPwd" + "';" +
                             "javascript:document.getElementById('login-form').submit();", s -> {
                     });
                 }
