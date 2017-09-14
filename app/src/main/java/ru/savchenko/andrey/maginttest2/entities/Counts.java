@@ -7,7 +7,9 @@ package ru.savchenko.andrey.maginttest2.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Counts {
+import io.realm.RealmObject;
+
+public class Counts extends RealmObject {
 
     @SerializedName("media")
     @Expose

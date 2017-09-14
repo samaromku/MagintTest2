@@ -5,6 +5,7 @@ import ru.savchenko.andrey.maginttest2.dialogs.interacotr.AuthInterator;
 import ru.savchenko.andrey.maginttest2.dialogs.view.AuthView;
 import ru.savchenko.andrey.maginttest2.entities.Data;
 import ru.savchenko.andrey.maginttest2.interfaces.OnAuthChangeListenter;
+import ru.savchenko.andrey.maginttest2.repository.BaseSpec;
 
 /**
  * Created by Andrey on 13.09.2017.
@@ -27,10 +28,7 @@ public class AuthPresenterImpl implements AuthPresenter {
                 .subscribe(dataContainer -> {
                             view.onSuccess();
                             Data data = dataContainer.getData();
-                    listenter.setBio(data.getBio());
-                    listenter.setImage(data.getProfilePicture());
-                    listenter.setLogin(data.getUsername());
-                    listenter.setName(data.getFullName());
+                            new BaseSpec<>(Data.class).addItem(data);
                         },
                         throwable -> {
                             throwable.printStackTrace();

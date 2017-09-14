@@ -2,6 +2,7 @@ package ru.savchenko.andrey.maginttest2;
 
 import android.app.Application;
 
+import io.realm.Realm;
 import ru.savchenko.andrey.maginttest2.network.RequestManager;
 import ru.savchenko.andrey.maginttest2.storage.Prefs;
 
@@ -15,5 +16,6 @@ public class App extends Application{
         super.onCreate();
         RequestManager.init();
         Prefs.init(this);
+        Realm.init(this);
     }
 }

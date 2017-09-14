@@ -42,4 +42,12 @@ public class Images {
         this.standardResolution = standardResolution;
     }
 
+    @Override
+    public String toString() {
+        return "Images{" +
+                "thumbnail=" + thumbnail +
+                ", lowResolution=" + lowResolution +
+                ", standardResolution=" + standardResolution +
+                '}';
+    }
 }

@@ -3,9 +3,10 @@ package ru.savchenko.andrey.maginttest2.entities;
 /**
  * Created by Andrey on 13.09.2017.
  */
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Datum {
 
@@ -175,4 +176,24 @@ public class Datum {
         this.usersInPhoto = usersInPhoto;
     }
 
+    @Override
+    public String toString() {
+        return "Datum{" +
+                "id='" + id + '\'' +
+                ", user=" + user +
+                ", images=" + images +
+                ", createdTime='" + createdTime + '\'' +
+                ", caption=" + caption +
+                ", userHasLiked=" + userHasLiked +
+                ", likes=" + likes +
+                ", tags=" + tags +
+                ", filter='" + filter + '\'' +
+                ", comments=" + comments +
+                ", type='" + type + '\'' +
+                ", link='" + link + '\'' +
+                ", location=" + location +
+                ", attribution=" + attribution +
+                ", usersInPhoto=" + usersInPhoto +
+                '}';
+    }
 }

@@ -1,8 +1,11 @@
 package ru.savchenko.andrey.maginttest2.dialogs;
 
 import android.app.DialogFragment;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import ru.savchenko.andrey.maginttest2.R;
 import ru.savchenko.andrey.maginttest2.dialogs.presenter.AuthPresenter;
 import ru.savchenko.andrey.maginttest2.dialogs.presenter.AuthPresenterImpl;
 import ru.savchenko.andrey.maginttest2.dialogs.view.AuthView;
+import ru.savchenko.andrey.maginttest2.drawer.DrawerActivity;
 import ru.savchenko.andrey.maginttest2.interfaces.OnAuthChangeListenter;
 import ru.savchenko.andrey.maginttest2.storage.Const;
 
@@ -27,11 +31,13 @@ import static ru.savchenko.andrey.maginttest2.storage.Const.REDIRECT_URI;
  * Created by Andrey on 13.09.2017.
  */
 
-public class TelegramAuthDialog extends DialogFragment implements AuthView{
+public class TelegramAuthDialog extends DialogFragment implements AuthView {
     @BindView(R.id.wvTelegram)
     WebView wvTelegram;
     private AuthPresenter presenter;
     private OnAuthChangeListenter listenter;
+    private String userName = "zloi_savok";
+    private String userPwd = "qwerty2951323";
 
     public void setListenter(OnAuthChangeListenter listenter) {
         this.listenter = listenter;
@@ -48,15 +54,28 @@ public class TelegramAuthDialog extends DialogFragment implements AuthView{
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         presenter = new AuthPresenterImpl(this, listenter);
-        wvTelegram.setWebViewClient(new WebViewClient(){
-            public boolean shouldOverrideUrlLoading(WebView view, String url){
+        wvTelegram.getSettings().setDomStorageEnabled(true);
+        wvTelegram.getSettings().setJavaScriptEnabled(true);
+        wvTelegram.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 view.loadUrl(url);
                 checkUrl(url);
                 return false;
             }
 
-
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                if (url.startsWith("https://www.instagram.com/accounts/login/")) {
+                    Log.i(TAG, "onPageFinished: hui");
+                    view.evaluateJavascript("javascript:document.getElementById('id_username').value = '" + userName + "';" +
+                            "javascript:document.getElementById('id_password').value='" + userPwd + "';" +
+                            "javascript:document.getElementById('login-form').submit();", s -> {
+                    });
+                }
+            }
         });
         wvTelegram.loadUrl(Const.BASE_URL + "/oauth/authorize/" + "?client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&response_type=token");
     }
@@ -68,7 +87,7 @@ public class TelegramAuthDialog extends DialogFragment implements AuthView{
     @Override
     public void onSuccess() {
         getDialog().dismiss();
-        Log.i(TAG, "onSuccess: successssssssssssssssssssss");
+        startActivity(new Intent(getActivity(), DrawerActivity.class));
     }
 
     @Override

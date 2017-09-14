@@ -18,8 +18,10 @@ public class Prefs {
         editor = sp.edit();
     }
 
+
     public static void saveToken(String token){
-        editor.putString(token, TOKEN);
+        editor.putString(TOKEN, token);
+        editor.commit();
     }
 
     public static String getToken(){

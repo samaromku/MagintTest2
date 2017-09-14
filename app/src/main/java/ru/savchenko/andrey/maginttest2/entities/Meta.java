@@ -8,7 +8,9 @@ package ru.savchenko.andrey.maginttest2.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Meta {
+import io.realm.RealmObject;
+
+public class Meta extends RealmObject {
 
     @SerializedName("code")
     @Expose
